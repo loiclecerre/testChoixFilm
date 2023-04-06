@@ -119,6 +119,7 @@ public class Test extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(compteurPanel2>0) {
                     compteurPanel2--;
+                    System.out.println("moins");
                 }
             }
         });
@@ -132,6 +133,7 @@ public class Test extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(compteurPanel2+1<maxSizePanel2) {
                     compteurPanel2++;
+                    System.out.println("plus");
                 }
             }
         });
@@ -145,6 +147,7 @@ public class Test extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(compteurPanel3>0) {
                     compteurPanel3--;
+                    System.out.println("moins");
                 }
             }
         });
@@ -158,6 +161,7 @@ public class Test extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(compteurPanel3+1<maxSizePanel3) {
                     compteurPanel3++;
+                    System.out.println("plus");
                 }
             }
         });
