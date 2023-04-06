@@ -249,7 +249,7 @@ public class Test extends JFrame {
 
         for(File files: allAfficheFilm)
         {
-            if(maConnexion.isSubstring(film, files.getName().replace(".png", ""))){;
+            if(maConnexion.isSubstring(film, files.getName().replace(".png", ""))){
                 fileSelectione.add(files);
                 maxSizePanel1++;
             }
