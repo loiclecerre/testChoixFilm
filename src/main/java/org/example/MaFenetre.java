@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 public class MaFenetre extends JFrame {
 
     public MaFenetre() {
-        super("Ma fenetre avec images");
+        super("Neteceflix");
 
         // Ajouter une barre de recherche
         JPanel searchPanel = new JPanel();
@@ -29,7 +29,7 @@ public class MaFenetre extends JFrame {
         imagePanelR2.setBackground(Color.BLACK);
         imagePanelR3.setBackground(Color.BLACK);
 
-        File folder = new File("ImagesFilm");
+        File folder = new File("afficheFilm");
         File[] files = folder.listFiles();
         int count =0;
         assert files != null;
@@ -60,52 +60,73 @@ public class MaFenetre extends JFrame {
 
                 if(count<3) {
                     if(count == 0) {
-                        // Ajouter le bouton avant le panel d'image
-                        JButton beforeButton = new JButton("Avant");
-                        beforeButton.setSize(new Dimension(50, 20)); // largeur de 50 pixels et hauteur de 30 pixels
-                        beforeButton.addActionListener(e -> System.out.println("Avant"));
-                        panel.add(beforeButton, BorderLayout.WEST);
+                        // Ajouter l'image avant le panel d'image
+                        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
+                        JLabel beforeLabel = new JLabel(beforeIcon);
+                        beforeLabel.addMouseListener(new MouseAdapter() {
+                            public void mouseClicked(MouseEvent e) {
+                                System.out.println("click1");
+                            }
+                        });
+                        panel.add(beforeLabel, BorderLayout.WEST);
                     }
-                    else if (count ==2) {
-                        // Ajouter le bouton après le panel d'image
-                        JButton afterButton = new JButton("Après");
-                        afterButton.setSize(new Dimension(50, 20)); // largeur de 50 pixels et hauteur de 30 pixels
-                        afterButton.addActionListener(e -> System.out.println("Après"));
-                        panel.add(afterButton, BorderLayout.EAST);
+                    else if (count == 2) {
+                        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
+                        JLabel beforeLabel = new JLabel(beforeIcon);
+                        beforeLabel.addMouseListener(new MouseAdapter() {
+                            public void mouseClicked(MouseEvent e) {
+                                System.out.println("click2");
+                            }
+                        });
+                        panel.add(beforeLabel, BorderLayout.EAST);
                     }
                     imagePanelR1.add(panel);
                 }
                 else if(count<6) {
                     if(count == 3) {
-                        // Ajouter le bouton avant le panel d'image
-                        JButton beforeButton = new JButton("Avant");
-                        beforeButton.setSize(new Dimension(50, 20)); // largeur de 50 pixels et hauteur de 30 pixels
-                        beforeButton.addActionListener(e -> System.out.println("Avant"));
-                        panel.add(beforeButton, BorderLayout.WEST);
+                        // Ajouter l'image avant le panel d'image
+                        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
+                        JLabel beforeLabel = new JLabel(beforeIcon);
+                        beforeLabel.addMouseListener(new MouseAdapter() {
+                            public void mouseClicked(MouseEvent e) {
+                                System.out.println("click3");
+                            }
+                        });
+                        panel.add(beforeLabel, BorderLayout.WEST);
                     }
                     else if (count ==5) {
-                        // Ajouter le bouton après le panel d'image
-                        JButton afterButton = new JButton("Après");
-                        afterButton.setSize(new Dimension(50, 20)); // largeur de 50 pixels et hauteur de 30 pixels
-                        afterButton.addActionListener(e -> System.out.println("Après"));
-                        panel.add(afterButton, BorderLayout.EAST);
+                        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
+                        JLabel beforeLabel = new JLabel(beforeIcon);
+                        beforeLabel.addMouseListener(new MouseAdapter() {
+                            public void mouseClicked(MouseEvent e) {
+                                System.out.println("click4");
+                            }
+                        });
+                        panel.add(beforeLabel, BorderLayout.EAST);
                     }
                     imagePanelR2.add(panel);
                 }
                 else if (count<9) {
                     if(count == 6) {
-                        // Ajouter le bouton avant le panel d'image
-                        JButton beforeButton = new JButton("Avant");
-                        beforeButton.setSize(new Dimension(50, 20)); // largeur de 50 pixels et hauteur de 30 pixels
-                        beforeButton.addActionListener(e -> System.out.println("Avant"));
-                        panel.add(beforeButton, BorderLayout.WEST);
+                        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
+                        JLabel beforeLabel = new JLabel(beforeIcon);
+                        beforeLabel.addMouseListener(new MouseAdapter() {
+                            public void mouseClicked(MouseEvent e) {
+                                System.out.println("click5");
+                            }
+                        });
+                        panel.add(beforeLabel, BorderLayout.WEST);
                     }
                     else if (count ==8) {
-                        // Ajouter le bouton après le panel d'image
-                        JButton afterButton = new JButton("Après");
-                        afterButton.setSize(new Dimension(50, 20)); // largeur de 50 pixels et hauteur de 30 pixels
-                        afterButton.addActionListener(e -> System.out.println("Après"));
-                        panel.add(afterButton, BorderLayout.EAST);
+                        // Ajouter l'image avant le panel d'image
+                        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
+                        JLabel beforeLabel = new JLabel(beforeIcon);
+                        beforeLabel.addMouseListener(new MouseAdapter() {
+                            public void mouseClicked(MouseEvent e) {
+                                System.out.println("click6");
+                            }
+                        });
+                        panel.add(beforeLabel, BorderLayout.EAST);
                     }
                     imagePanelR3.add(panel);
                 }
