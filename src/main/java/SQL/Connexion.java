@@ -91,6 +91,17 @@ public class Connexion {
         stmt.executeUpdate(requeteMaj);
     }
 
+    public String remplirChampsRequeteString(String requete) throws SQLException {
+        rset = stmt.executeQuery(requete);
+        String s = "";
+        while (rset.next())
+        {
+            s = s + rset.getString(1) +", ";
+        }
+        //System.out.println(s);
+        return s;
+    }
+
     public String remplirChampsRequete1String(String requete) throws SQLException {
         // récupération de l'ordre de la requete
         rset = stmt.executeQuery(requete);

@@ -18,10 +18,7 @@ public class Test extends JFrame {
     private JPanel affichePanel2;
     private JPanel affichePanel3;
     private JPanel searchPanel;
-    private JTextField searchField;
-    private JButton searchButton;
-    
-    ///Compteur pour afficher les afficheFilm
+
     private int compteurPanel1;
     private int maxSizePanel1;
     private int compteurPanel2;
@@ -32,28 +29,19 @@ public class Test extends JFrame {
     Connexion maConnexion;
     Users monUsers;
 
-    public Test(Users monUsers) throws SQLException, ClassNotFoundException {
+    public Test(Users monUsers) throws SQLException, ClassNotFoundException, IOException {
         super("Neteceflix");
 
-        maConnexion = new Connexion();
+        this.maConnexion = new Connexion();
         this.monUsers = monUsers;
 
-        creationBarreDeRecherche();
-        creationAffichePanel();
+        initialisationBarreDeRecherche();
+        initialisationAffichePanel();
 
-        ///Créer les 3 panels : liste, enCours, action
-        File folder = new File("afficheFilm");
-        File[] allAfficheFilm = folder.listFiles();
-        int count =0;
-        assert allAfficheFilm != null;
-        for (File afficheFilm : allAfficheFilm) {
-            try {
-                //verif film liste, en cours, action
-                insertAfficheAndBoutonToPanel(count, afficheFilm);
-            } catch (IOException ex) {
-                System.out.println("Erreur de lecture de l'image : " + ex.getMessage());
-            }
-        }
+        creationPanel1();
+        creationPanel2();
+        creationPanel3();
+
         // Ajouter les panels dans la fenetre
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         add(searchPanel);
@@ -66,26 +54,27 @@ public class Test extends JFrame {
         setVisible(true);
     }
     
-    public void creationBarreDeRecherche(){
+    public void initialisationBarreDeRecherche(){
         // Ajouter une barre de recherche
         this.searchPanel = new JPanel();
-        this.searchField = new JTextField(20);
-        this.searchButton = new JButton("Rechercher");
-        searchPanel.setBackground(Color.BLACK);
-        searchPanel.add(searchField);
-        searchPanel.add(searchButton);
+        JTextField searchField = new JTextField(20);
+        JButton searchButton = new JButton("Rechercher");
+        this.searchPanel.setBackground(Color.BLACK);
+        this.searchPanel.add(searchField);
+        this.searchPanel.add(searchButton);
     }
     
-    public void creationAffichePanel(){
+    public void initialisationAffichePanel(){
         // Ajouter les images dans une grille 1x3
         this.affichePanel1 = new JPanel(new GridLayout(1, 3, 0, 0));
         this.affichePanel2 = new JPanel(new GridLayout(1, 3, 0, 0));
         this.affichePanel3 = new JPanel(new GridLayout(1, 3, 0, 0));
 
-        affichePanel1.setBackground(Color.BLACK);
-        affichePanel2.setBackground(Color.BLACK);
-        affichePanel3.setBackground(Color.BLACK);
+        this.affichePanel1.setBackground(Color.BLACK);
+        this.affichePanel2.setBackground(Color.BLACK);
+        this.affichePanel3.setBackground(Color.BLACK);
 
+        ///Compteur pour afficher les afficheFilm
         this.compteurPanel1=0;
         this.compteurPanel2=0;
         this.compteurPanel3=0;
@@ -95,9 +84,160 @@ public class Test extends JFrame {
         this.maxSizePanel3=0;
     }
 
-    private ArrayList<File> filtrageFilm (ArrayList<String> filmSelectioné)
-    {
-        ArrayList<File> fileSelectioné = monUsers.getFilmAVoir();
+    public JLabel creationFlecheGaucheP1(){
+        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
+        JLabel beforeLabel = new JLabel(beforeIcon);
+        beforeLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(compteurPanel1>0) {
+                    compteurPanel1--;
+                    System.out.println("moins");
+                }
+            }
+        });
+        return beforeLabel;
+    }
+
+    public JLabel creationFlecheDroiteP1(){
+        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
+        JLabel beforeLabel = new JLabel(beforeIcon);
+        beforeLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(compteurPanel1+1<maxSizePanel1) {
+                    compteurPanel1++;
+                    System.out.println("plus");
+                }
+            }
+        });
+        return beforeLabel;
+    }
+
+    public JLabel creationFlecheGaucheP2(){
+        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
+        JLabel beforeLabel = new JLabel(beforeIcon);
+        beforeLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(compteurPanel2>0) {
+                    compteurPanel2--;
+                }
+            }
+        });
+        return beforeLabel;
+    }
+
+    public JLabel creationFlecheDroiteP2(){
+        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
+        JLabel beforeLabel = new JLabel(beforeIcon);
+        beforeLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(compteurPanel2+1<maxSizePanel2) {
+                    compteurPanel2++;
+                }
+            }
+        });
+        return beforeLabel;
+    }
+
+    public JLabel creationFlecheGaucheP3(){
+        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
+        JLabel beforeLabel = new JLabel(beforeIcon);
+        beforeLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(compteurPanel3>0) {
+                    compteurPanel3--;
+                }
+            }
+        });
+        return beforeLabel;
+    }
+
+    public JLabel creationFlecheDroiteP3(){
+        ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
+        JLabel beforeLabel = new JLabel(beforeIcon);
+        beforeLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(compteurPanel3+1<maxSizePanel3) {
+                    compteurPanel3++;
+                }
+            }
+        });
+        return beforeLabel;
+    }
+
+    public void creationPanel1() throws IOException {
+        affichePanel1.add(creationFlecheGaucheP1());
+
+        for(File files : filtrageFilmP1(monUsers.getFilmAVoir()))
+        {
+            JLabel imgLabel = new JLabel(new ImageIcon(ImageIO.read(files)));
+            imgLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(imgLabel, BorderLayout.CENTER);
+            panel.setBackground(Color.BLACK);
+
+            imgLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    JFrame frame = new JFrame(files.getName().replace(".png", ""));
+                    frame.setSize(400, 400);
+                    frame.setVisible(true);
+                }
+            });
+            affichePanel1.add(panel);
+        }
+        affichePanel1.add(creationFlecheDroiteP1());
+    }
+
+    public void creationPanel2() throws IOException {
+        affichePanel2.add(creationFlecheGaucheP2());
+        for(File files : filtrageFilmP2(monUsers.getFilmEnCours()))
+        {
+            JLabel imgLabel = new JLabel(new ImageIcon(ImageIO.read(files)));
+            imgLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(imgLabel, BorderLayout.CENTER);
+            panel.setBackground(Color.BLACK);
+
+            imgLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    JFrame frame = new JFrame(files.getName().replace(".png", ""));
+                    frame.setSize(400, 400);
+                    frame.setVisible(true);
+                }
+            });
+            affichePanel2.add(panel);
+        }
+        affichePanel2.add(creationFlecheDroiteP2());
+    }
+
+    public void creationPanel3() throws IOException, SQLException {
+        affichePanel3.add(creationFlecheGaucheP3());
+        //System.out.println("creation");
+        System.out.println(maConnexion.remplirChampsRequeteString("select titre from oeuvre where categorie = 'Science-fiction';"));
+        for(File files : filtrageFilmP3(maConnexion.remplirChampsRequeteString("select titre from oeuvre where categorie = 'Science-fiction';")))
+        {
+            JLabel imgLabel = new JLabel(new ImageIcon(ImageIO.read(files)));
+            imgLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(imgLabel, BorderLayout.CENTER);
+            panel.setBackground(Color.BLACK);
+
+            imgLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    JFrame frame = new JFrame(files.getName().replace(".png", ""));
+                    frame.setSize(400, 400);
+                    frame.setVisible(true);
+                }
+            });
+            affichePanel3.add(panel);
+        }
+        affichePanel3.add(creationFlecheDroiteP3());
+    }
+
+    private ArrayList<File> filtrageFilmP1 (String film){
+        ArrayList<File> fileSelectione = new ArrayList<>();
 
         File folder = new File("afficheFilm");
         File[] allAfficheFilm = folder.listFiles();
@@ -105,124 +245,51 @@ public class Test extends JFrame {
 
         for(File files: allAfficheFilm)
         {
-            try {
-                for(String filmSelec : filmSelectioné)
-                {
-                    if()
-                }
-            } catch (IOException ex) {
-                System.out.println("Erreur de lecture de l'image : " + ex.getMessage());
+            if(maConnexion.isSubstring(film, files.getName().replace(".png", ""))){;
+                fileSelectione.add(files);
+                maxSizePanel1++;
             }
         }
-
+        return fileSelectione;
     }
 
-    public void insertAfficheAndBoutonToPanel(int count, File afficheFilm) throws IOException {
-        Image img = ImageIO.read(afficheFilm);
-        JLabel imgLabel = new JLabel(new ImageIcon(img));
-        imgLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        // Ajouter le titre prédéfini sous chaque image
-        String title = afficheFilm.getName().replace(".png", ""); // utiliser le nom du fichier sans l'extension
-        JLabel titleLabel = new JLabel(title);
-        titleLabel.setForeground(Color.WHITE);
-        titleLabel.setHorizontalAlignment(JLabel.CENTER); // centrer le texte/
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(imgLabel, BorderLayout.CENTER);
-        //panel.add(titleLabel, BorderLayout.SOUTH);
-        panel.setBackground(Color.BLACK);
+    private ArrayList<File> filtrageFilmP2 (String film){
+        ArrayList<File> fileSelectione = new ArrayList<>();
 
+        File folder = new File("afficheFilm");
+        File[] allAfficheFilm = folder.listFiles();
+        assert allAfficheFilm != null;
 
-        // Ajouter l'action pour ouvrir une fenêtre avec le titre du film
-        imgLabel.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JFrame frame = new JFrame(title);
-                frame.setSize(400, 400);
-                frame.setVisible(true);
+        for(File files: allAfficheFilm)
+        {
+            if(maConnexion.isSubstring(film, files.getName().replace(".png", ""))){
+                fileSelectione.add(files);
+                maxSizePanel2++;
             }
-        });
-
-        if(count<3) {
-            if(count == 0) {
-                // Ajouter l'image avant le panel d'image
-                ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
-                JLabel beforeLabel = new JLabel(beforeIcon);
-                beforeLabel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        if(compteurPanel1>0)
-                            compteurPanel1--;
-                    }
-                });
-                panel.add(beforeLabel, BorderLayout.WEST);
-            }
-            else if (count == 2) {
-                ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
-                JLabel beforeLabel = new JLabel(beforeIcon);
-                beforeLabel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        if(compteurPanel1>0)
-                            compteurPanel1++;
-                    }
-                });
-                panel.add(beforeLabel, BorderLayout.EAST);
-            }
-            affichePanel1.add(panel);
         }
-        else if(count<6) {
-            if(count == 3) {
-                // Ajouter l'image avant le panel d'image
-                ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
-                JLabel beforeLabel = new JLabel(beforeIcon);
-                beforeLabel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        System.out.println("click3");
-                    }
-                });
-                panel.add(beforeLabel, BorderLayout.WEST);
-            }
-            else if (count ==5) {
-                ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
-                JLabel beforeLabel = new JLabel(beforeIcon);
-                beforeLabel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        System.out.println("click4");
-                    }
-                });
-                panel.add(beforeLabel, BorderLayout.EAST);
-            }
-            affichePanel2.add(panel);
-        }
-        else if (count<9) {
-            if(count == 6) {
-                ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
-                JLabel beforeLabel = new JLabel(beforeIcon);
-                beforeLabel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        System.out.println("click5");
-                    }
-                });
-                panel.add(beforeLabel, BorderLayout.WEST);
-            }
-            else if (count ==8) {
-                // Ajouter l'image avant le panel d'image
-                ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_droite.png");
-                JLabel beforeLabel = new JLabel(beforeIcon);
-                beforeLabel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        System.out.println("click6");
-                    }
-                });
-                panel.add(beforeLabel, BorderLayout.EAST);
-            }
-            affichePanel3.add(panel);
-        }
-        else {
-            break;
-        }
-        count++;
+        return fileSelectione;
     }
 
-    public static void main(String[] args) {
-        Test fenetre = new Test();
+    private ArrayList<File> filtrageFilmP3 (String film){
+        ArrayList<File> fileSelectione = new ArrayList<>();
+
+        File folder = new File("afficheFilm");
+        File[] allAfficheFilm = folder.listFiles();
+        assert allAfficheFilm != null;
+
+        for(File files: allAfficheFilm)
+        {
+            if(maConnexion.isSubstring(film, files.getName().replace(".png", ""))){
+                fileSelectione.add(files);
+                maxSizePanel3++;
+            }
+        }
+        return fileSelectione;
+    }
+
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+        Users tst = new Users("loic.lecerre@gmail.com", "loic Lecerre");
+        Test fenetre = new Test(tst);
     }
 }
 

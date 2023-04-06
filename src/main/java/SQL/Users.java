@@ -2,7 +2,6 @@ package SQL;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Users extends Connexion {
     protected int idUsers;
@@ -10,10 +9,10 @@ public class Users extends Connexion {
     protected String email;
     protected String motDePasse;
     protected Double age;
-    protected ArrayList<String> filmVu;
-    protected ArrayList<String> filmAVoir;
-    protected ArrayList<String> filmEnCours;
-    protected ArrayList<String> filmAime;
+    protected String filmVu;
+    protected String filmAVoir;
+    protected String filmEnCours;
+    protected String filmAime;
     protected boolean admin;
     protected ImageIcon photo;
 
@@ -30,10 +29,10 @@ public class Users extends Connexion {
         this.name = remplirChampsRequete1String("SELECT name FROM users WHERE name='"+name+"' and email='"+email+"';");
         this.age = Double.parseDouble(remplirChampsRequete1Int("SELECT age FROM users WHERE idUsers='"+this.idUsers+"';"));
         this.photo = new ImageIcon("Images/"+remplirChampsRequete1String("SELECT photo FROM users WHERE idUsers='"+this.idUsers+"';"));
-        this.filmVu = remplirChampsRequete("SELECT filmVu FROM users WHERE idUsers='"+this.idUsers+"';");
-        this.filmAVoir = remplirChampsRequete("SELECT filmAVoir FROM users WHERE idUsers='"+this.idUsers+"';");
-        this.filmEnCours = remplirChampsRequete("SELECT filmEnCours FROM users WHERE idUsers='"+this.idUsers+"';");
-        this.filmAime = remplirChampsRequete("SELECT filmAime FROM users WHERE idUsers='"+this.idUsers+"';");
+        this.filmVu = remplirChampsRequete1String("SELECT filmVu FROM users WHERE idUsers='"+this.idUsers+"';");
+        this.filmAVoir = remplirChampsRequete1String("SELECT filmAVoir FROM users WHERE idUsers='"+this.idUsers+"';");
+        this.filmEnCours = remplirChampsRequete1String("SELECT filmEnCours FROM users WHERE idUsers='"+this.idUsers+"';");
+        this.filmAime = remplirChampsRequete1String("SELECT filmAime FROM users WHERE idUsers='"+this.idUsers+"';");
     }
 
     public int getIdUsers() {
@@ -56,19 +55,19 @@ public class Users extends Connexion {
         return age;
     }
 
-    public ArrayList<String> getFilmVu() {
+    public String getFilmVu() {
         return filmVu;
     }
 
-    public ArrayList<String> getFilmAVoir() {
+    public String getFilmAVoir() {
         return filmAVoir;
     }
 
-    public ArrayList<String> getFilmEnCours() {
+    public String getFilmEnCours() {
         return filmEnCours;
     }
 
-    public ArrayList<String> getFilmAime() {
+    public String getFilmAime() {
         return filmAime;
     }
 
@@ -87,55 +86,28 @@ public class Users extends Connexion {
         this.age = age;
     }
 
-    public void setfilmVu(ArrayList<String> filmVu) throws SQLException {
-        executeUpdate("UPDATE users SET filmVu='"+ Connexion.concatenateArrayList(filmVu)+"'WHERE idUsers="+this.idUsers+";");
+    public void setfilmVu(String filmVu) throws SQLException {
+        executeUpdate("UPDATE users SET filmVu='"+ filmVu +"'WHERE idUsers="+this.idUsers+";");
         this.filmVu = filmVu;
     }
 
-    public void setfilmAVoir(ArrayList<String> filmAVoir) throws SQLException {
-        executeUpdate("UPDATE film SET filmAVoir='"+ Connexion.concatenateArrayList(filmAVoir)+"'WHERE idUsers="+this.idUsers+";");
+    public void setfilmAVoir(String filmAVoir) throws SQLException {
+        executeUpdate("UPDATE film SET filmAVoir='"+ filmAVoir +"'WHERE idUsers="+this.idUsers+";");
         this.filmAVoir = filmAVoir;
     }
 
-    public void setfilmEnCours(ArrayList<String> filmEnCours) throws SQLException {
-        executeUpdate("UPDATE users SET filmEnCours='"+ Connexion.concatenateArrayList(filmEnCours)+"'WHERE idUsers="+this.idUsers+";");
+    public void setfilmEnCours(String filmEnCours) throws SQLException {
+        executeUpdate("UPDATE users SET filmEnCours='"+ filmEnCours +"'WHERE idUsers="+this.idUsers+";");
         this.filmEnCours = filmEnCours;
     }
 
-    public void setfilmAime(ArrayList<String> filmAime) throws SQLException {
-        executeUpdate("UPDATE users SET filmAime='"+ Connexion.concatenateArrayList(filmAime)+"'WHERE idUsers="+this.idUsers+";");
+    public void setfilmAime(String filmAime) throws SQLException {
+        executeUpdate("UPDATE users SET filmAime='"+ filmAime +"'WHERE idUsers="+this.idUsers+";");
         this.filmAime = filmAime;
     }
 
     public void setPhoto(ImageIcon photo) throws SQLException {
         executeUpdate("UPDATE users SET photo='"+photo+"'WHERE idUsers="+this.photo+";");
         this.photo = new ImageIcon("Images/"+photo);
-    }
-
-    public void display_Users() {
-
-        System.out.println("ID : " + idUsers);
-        System.out.println("admin : " + admin);
-        System.out.println("name : " + name);
-        System.out.println("email : " + email);
-        System.out.println("motDePasse : " + motDePasse);
-        System.out.println("age : " + age);
-        System.out.print("filmVu : ");
-        for(String list1 : filmVu)
-            System.out.print(list1);
-        System.out.println();
-        System.out.print("filmAVoir : ");
-        for(String list1 : filmAVoir)
-            System.out.print(list1);
-        System.out.println();
-        System.out.print("filmEnCours : ");
-        for(String list1 : filmEnCours)
-            System.out.print(list1);
-        System.out.println();
-        System.out.print("filmAime : ");
-        for(String list1 : filmAime)
-            System.out.print(list1);
-        System.out.println();
-        System.out.println();
     }
 }
