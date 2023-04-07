@@ -1,4 +1,4 @@
-package org.example;
+package mainPanel;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,4 +1,4 @@
-package org.example;
+package mainPanel;
 
 import SQL.Connexion;
 import SQL.Users;
