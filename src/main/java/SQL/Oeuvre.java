@@ -8,8 +8,8 @@ abstract class Oeuvre extends Connexion {
     protected String titre;
     protected double annee;
     protected double duree;
-    protected ArrayList<String> categorie;
-    protected ArrayList<String> nomRealisateur;
+    protected String categorie;
+    protected String nomRealisateur;
     protected ImageIcon photo;
     protected int nombreDeVue;
     protected int watchTime;
@@ -19,8 +19,8 @@ abstract class Oeuvre extends Connexion {
         this.titre = remplirChampsRequete1String("SELECT titre FROM oeuvre WHERE titre='"+titre+"';");
         this.annee = Double.parseDouble(remplirChampsRequete1Int("SELECT annee FROM oeuvre WHERE titre='"+titre+"';"));
         this.duree = Double.parseDouble(remplirChampsRequete1Int("SELECT duree FROM oeuvre WHERE titre='"+titre+"';"));
-        this.categorie = remplirChampsRequete("SELECT categorie FROM oeuvre WHERE titre='"+titre+"';");
-        this.nomRealisateur = remplirChampsRequete("SELECT nomRealisateur FROM oeuvre WHERE titre='"+titre+"';");
+        this.categorie = remplirChampsRequete1String("SELECT categorie FROM oeuvre WHERE titre='"+titre+"';");
+        this.nomRealisateur = remplirChampsRequete1String("SELECT nomRealisateur FROM oeuvre WHERE titre='"+titre+"';");
         this.photo = new ImageIcon("Images/"+remplirChampsRequete1String("SELECT photo FROM oeuvre WHERE titre='"+titre+"';"));
         this.nombreDeVue = Integer.parseInt(remplirChampsRequete1Int("SELECT nombreDeVue FROM oeuvre WHERE titre='"+titre+"';"));
         this.watchTime = Integer.parseInt(remplirChampsRequete1Int("SELECT watchTime FROM oeuvre WHERE titre='"+titre+"';"));
@@ -38,11 +38,11 @@ abstract class Oeuvre extends Connexion {
         return duree;
     }
 
-    public ArrayList<String> getCategorie() {
+    public String getCategorie() {
         return categorie;
     }
 
-    public ArrayList<String> getNomRealisateur() {
+    public String getNomRealisateur() {
         return nomRealisateur;
     }
 
@@ -69,13 +69,13 @@ abstract class Oeuvre extends Connexion {
         this.duree = duree;
     }
 
-    public void setCategorie(ArrayList<String> categorie) throws SQLException {
-        executeUpdate("UPDATE film SET categorie='"+ Connexion.concatenateArrayList(categorie)+"' WHERE titre="+this.titre+";");
+    public void setCategorie(String categorie) throws SQLException {
+        executeUpdate("UPDATE film SET categorie='"+ categorie +"' WHERE titre="+this.titre+";");
         this.categorie = categorie;
     }
 
-    public void setNomRealisateur(ArrayList<String> nomRealisateur) throws SQLException {
-        executeUpdate("UPDATE film SET nomRealisateur='"+ Connexion.concatenateArrayList(nomRealisateur)+"' WHERE titre="+this.titre+";");
+    public void setNomRealisateur(String nomRealisateur) throws SQLException {
+        executeUpdate("UPDATE film SET nomRealisateur='"+ nomRealisateur +"' WHERE titre="+this.titre+";");
         this.nomRealisateur = nomRealisateur;
     }
 

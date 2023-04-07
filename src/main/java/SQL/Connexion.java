@@ -98,7 +98,6 @@ public class Connexion {
         {
             s = s + rset.getString(1) +", ";
         }
-        //System.out.println(s);
         return s;
     }
 

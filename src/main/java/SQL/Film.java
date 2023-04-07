@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Film extends Oeuvre {
-    private ArrayList<String> nomActeurs;
+    private String nomActeurs;
     private String summary;
     private String filmLocalisationPC;
     private boolean recompense;
@@ -19,7 +19,7 @@ public class Film extends Oeuvre {
     public Film (String titre) throws SQLException, ClassNotFoundException {
         super(titre);
 
-        this.nomActeurs = remplirChampsRequete("SELECT nomActeurs FROM film WHERE titre='"+titre+"';");
+        this.nomActeurs = remplirChampsRequete1String("SELECT nomActeurs FROM film WHERE titre='"+titre+"';");
         this.summary = remplirChampsRequete1String("SELECT summary FROM film WHERE titre='"+titre+"';");
         this.filmLocalisationPC = remplirChampsRequete1String("SELECT filmLocalisationPC FROM film WHERE titre='"+titre+"';");
         this.recompense = Integer.parseInt(remplirChampsRequete1Int("SELECT recompense FROM film WHERE titre='"+titre+"';")) == 1;
@@ -31,8 +31,8 @@ public class Film extends Oeuvre {
         this.langue="francais";
     }
 
-    public void setNomActeurs(ArrayList<String> nomActeurs) throws SQLException {
-        executeUpdate("UPDATE film SET nomActeurs='"+ Connexion.concatenateArrayList(nomActeurs)+"' WHERE titre='"+titre+";");
+    public void setNomActeurs(String nomActeurs) throws SQLException {
+        executeUpdate("UPDATE film SET nomActeurs='"+ nomActeurs +"' WHERE titre='"+titre+";");
         this.nomActeurs = nomActeurs;
     }
 
@@ -83,7 +83,7 @@ public class Film extends Oeuvre {
     }
 
     ///getter
-    public ArrayList<String> getNomActeurs() {
+    public String getNomActeurs() {
         return nomActeurs;
     }
 
@@ -127,17 +127,11 @@ public class Film extends Oeuvre {
         System.out.println("titre : " + titre);
         System.out.println("annee : " + annee);
         System.out.println("duree : " + duree);
-        System.out.print("categorie : ");
-        for(String list1 : categorie)
-            System.out.print(list1);
+        System.out.print("categorie : " + categorie);
         System.out.println();
-        System.out.print("nomRealisateur : ");
-        for(String list1 : nomRealisateur)
-            System.out.print(list1);
+        System.out.print("nomRealisateur : " + nomRealisateur);
         System.out.println();
-        System.out.print("nomActeurs : ");
-        for(String list1 : nomActeurs)
-            System.out.print(list1);
+        System.out.print("nomActeurs : " + nomActeurs);
         System.out.println();
         System.out.println("summary : " + summary);
         System.out.println("filmLocalisationPC : " + filmLocalisationPC);
