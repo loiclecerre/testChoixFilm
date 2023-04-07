@@ -70,8 +70,6 @@ public class Test extends JFrame {
         this.affichePanel2 = new JPanel();
         this.affichePanel3 = new JPanel();
 
-        System.out.println(this.affichePanel1.getSize());
-
         this.affichePanel1.setBackground(Color.BLACK);
         this.affichePanel2.setBackground(Color.BLACK);
         this.affichePanel3.setBackground(Color.BLACK);
@@ -89,14 +87,7 @@ public class Test extends JFrame {
     public JLabel creationFlecheGaucheP1(){
         ImageIcon beforeIcon = new ImageIcon("imagesFilm/fleche_gauche.png");
         JLabel beforeLabel = new JLabel(beforeIcon);
-        //beforeLabel.setIcon(null);
         beforeLabel.addMouseListener(new MouseAdapter() {
-            /*public void mouseEntered(MouseEvent e) {
-                beforeLabel.setIcon(beforeIcon);
-            }
-            public void mouseExited(MouseEvent e) {
-                beforeLabel.setIcon(null);
-            }*/
             public void mouseClicked(MouseEvent e) {
                 if(compteurPanel1>0) {
                     compteurPanel1--;
@@ -104,7 +95,6 @@ public class Test extends JFrame {
                 }
             }
         });
-        //System.out.println(beforeLabel.getX());
         return beforeLabel;
     }
 
